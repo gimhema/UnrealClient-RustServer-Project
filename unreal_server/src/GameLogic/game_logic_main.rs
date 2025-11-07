@@ -17,7 +17,6 @@ pub enum Command {
     Delete { entity_id: u32 },
     Move { entity_id: u32, loc_x: f32, loc_y: f32, loc_z: f32, q_x: f32, q_y: f32, q_z: f32, q_w: f32 },
     Shoot { entity_id: u32, target_id: u32, damage: u32 },
-
     NetSendUdp { addr: SocketAddr, payload: Vec<u8> },
 }
 

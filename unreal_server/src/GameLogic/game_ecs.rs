@@ -46,17 +46,24 @@ impl World {
     /// 기본 Entity 생성 (빈 컴포넌트)
     pub fn create_entity(&mut self, _new_id : EntityId) -> EntityId {
         self.entities.insert(_new_id);
+
+        let transform = Transform::new(
+            Position::new(0.0, 0.0, 0.0),
+            Rotation::new(0.0, 0.0, 0.0, 1.0)
+        );
+        self.init_components(Some(transform), _new_id.clone());
+
         _new_id
     }
 
-    /// Entity 생성과 동시에 Position, Velocity 등록
-    pub fn create_entity_with_components(
+    pub fn init_components(
         &mut self,
-        position: Option<Transform>,
+        _transform: Option<Transform>,
+        // Other Components ...
         _new_id : EntityId
     ) -> EntityId {
         let id = self.create_entity(_new_id);
-        if let Some(pos) = position {
+        if let Some(pos) = _transform {
             self.transforms.insert(id, pos);
         }
         id
@@ -75,10 +82,6 @@ impl World {
         self.entities.remove(&entity);
         self.transforms.remove(&entity);
         // 향후 다른 컴포넌트들도 여기에 추가
-    }
-
-    pub fn add_position(&mut self, entity: EntityId, pos: Transform) {
-        self.transforms.insert(entity, pos);
     }
 
 
