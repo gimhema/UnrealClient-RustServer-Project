@@ -74,8 +74,6 @@ impl World {
             transform.set_position(update_mov.position);
             transform.set_rotation(update_mov.rotation);
         }
-        // self.transforms.get_mut(&entity).unwrap().set_position(target);
-        // self.transforms.get_mut(&entity).unwrap().set_rotation(target);
     }
 
     pub fn delete_entity(&mut self, entity: EntityId) {

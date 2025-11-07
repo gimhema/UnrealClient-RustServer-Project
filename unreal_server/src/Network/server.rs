@@ -111,7 +111,6 @@ pub fn start(&mut self) -> io::Result<()> {
 
         {
             let mut gl = self.game_logic.lock().unwrap();
-            gl.world_create();
 
             let targets_registry = self.udp_targets_registry.clone();
             let targets_fn = Arc::new(move || targets_registry.read().unwrap().clone());

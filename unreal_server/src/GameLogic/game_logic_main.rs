@@ -40,19 +40,6 @@ impl GameLogicMain {
         self.net_tx = Some(tx);
     }
 
-    pub fn world_create(&mut self) {
-        
-        // let mut new_world = World::new();
-        // new_world.init_world_info(0, WorldType::MainWorld);
-        // self.world_container.insert(0, new_world);
-
-        // . . .
-    }
-
-    // pub fn push_command(&mut self, cmd : Command) {
-    //     self.command_queue.push(cmd);
-    // }
-
     pub fn push_command(&self, cmd : Command) {
         self.command_queue.push(cmd);
     }
