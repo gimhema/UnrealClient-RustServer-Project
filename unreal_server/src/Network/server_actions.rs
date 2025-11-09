@@ -85,8 +85,15 @@ impl Server {
         self.game_logic.lock().unwrap().push_command(
             Command::Create { entity_id: _new_entity_id  }
         );
-        
-
-        
     }
+
+    pub fn server_action_chat_message(&mut self,
+        _sender_id: u32,
+        _chat_content: String) {
+            println!("Received chat message from sender ID: {}, content: {}",
+                     _sender_id, _chat_content);
+
+                     
+    }
+
 }

@@ -62,7 +62,7 @@ impl Server{
                 ServerActionType::EnterPlayer(_pId, _accountId, _playerName, _connInfo) => 
                 { self.server_action_enter_player(_pId, _accountId, _playerName, _connInfo);  }
                 ServerActionType::ChatMessage(_senderId, _chatContent) =>
-                { }
+                { self.server_action_chat_message(_senderId, _chatContent);}
             }
         }
         self.processing_waiting_queue();
