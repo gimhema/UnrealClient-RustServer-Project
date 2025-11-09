@@ -40,7 +40,8 @@ enum_from_u32! {
         ALLOW_CONNECT_GAME = 11,
         SERVER_RESPONSE = 12,
         ENTER_PLAYER_TO_GAME = 13,
-        END = 14
+        SET_PLAYER_INFO = 14,
+        END = 15,
     }
 }
 
