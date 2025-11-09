@@ -1,6 +1,6 @@
-// use crate::get_udp_server_instance;
-use crate::qsm::user_message::message_chat::{self, ChatMessage};
 
+use crate::qsm::user_message::message_chat::{self, ChatMessage};
+use super::Network::server_common::*;
 
 
 
@@ -14,7 +14,11 @@ pub fn CallBack_Chat(buffer: &[u8])
             println!("sender id : {}", sender);
             println!("chat content : {}", chat_content);
 
-//            get_udp_server_instance().write().unwrap().send_message_to_all_conn(buffer);
+            if let Err(_) = GLOBAL_SERVER_ACTION_QUEUE.push(ServerActionType::ChatMessage(sender, chat_content)) {
+                eprintln!("Failed to queue Server Action EnterPlayer");
+            } else {
+                println!("Queued Server Action EnterPlayer");
+            }
         }
         Err(e) => {
             eprintln!("Failed to deserialize ChatMessage: {}", e);
