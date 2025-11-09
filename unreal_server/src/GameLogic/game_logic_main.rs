@@ -11,13 +11,14 @@ use mio::Token;
 use crate::Network::net_tx::NetSender;
 
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Command {
     Create { entity_id: u32 },
     Delete { entity_id: u32 },
     Move { entity_id: u32, loc_x: f32, loc_y: f32, loc_z: f32, q_x: f32, q_y: f32, q_z: f32, q_w: f32 },
     Shoot { entity_id: u32, target_id: u32, damage: u32 },
     NetSendUdp { addr: SocketAddr, payload: Vec<u8> },
+    ChatMessage { entity_id: u32, content: String },
 }
 
 pub struct GameLogicMain {
@@ -60,9 +61,13 @@ impl GameLogicMain {
                 Command::Shoot { entity_id, target_id,damage } => {
                     self.do_command_shoot(cmd);
                 }
+                Command::ChatMessage { entity_id, content } => {
+                    self.do_command_chat_message(entity_id, content);
+                }
                 Command::NetSendUdp { addr, payload } => {
                     self.try_send_udp(addr, payload);
                 }
+
             }
         }
     }
