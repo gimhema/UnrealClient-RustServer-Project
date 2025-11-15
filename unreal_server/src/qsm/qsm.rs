@@ -13,7 +13,7 @@ use super::user_event::event_make_account::CallBack_MakeAccount;
 use super::user_event::event_make_account::CallBack_VerifyAccount;
 use super::user_event::event_new_player::CallBack_EnterNewPlayerToGame;
 use super::user_event::event_new_player::CallBack_AllowConnectGame;
-use super::user_event::event_new_player::Callback_SetPlayerInfo;
+use super::user_event::event_player_info::Callback_SetPlayerInfo;
 
 use lazy_static::lazy_static;
 use crate::Network::connection::{MessageToSend}; // 경로를 실제에 맞게 수정하세요.

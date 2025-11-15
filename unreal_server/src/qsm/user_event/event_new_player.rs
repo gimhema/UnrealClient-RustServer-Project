@@ -13,12 +13,6 @@ pub fn CallBack_EnterNewPlayerToGame(buffer: &[u8])
 
 }
 
-
-pub fn Callback_SetPlayerInfo(buffer: &[u8])
-{
-
-}
-
 pub fn CallBack_AllowConnectGame(buffer: &[u8])
 {
     match AllowConnectGame::deserialize(buffer) {
