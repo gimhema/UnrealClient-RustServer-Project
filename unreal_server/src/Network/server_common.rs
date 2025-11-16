@@ -16,7 +16,7 @@ use std::collections::BTreeSet;
 pub enum ServerActionType
 {
     EnterPlayer(u32, String, String, String), // 이 유저는 접속했으니까 대기큐에서 삭제해도 괜찮다.
-    ChatMessage(u32, String) // 채팅 메시지 처리
+
 }
 
 lazy_static! {
@@ -61,8 +61,6 @@ impl Server{
             match action {
                 ServerActionType::EnterPlayer(_pId, _accountId, _playerName, _connInfo) => 
                 { self.server_action_enter_player(_pId, _accountId, _playerName, _connInfo);  }
-                ServerActionType::ChatMessage(_senderId, _chatContent) =>
-                { self.server_action_chat_message(_senderId, _chatContent);}
             }
         }
         self.processing_waiting_queue();

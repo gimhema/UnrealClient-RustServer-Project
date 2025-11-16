@@ -9,7 +9,10 @@ pub fn Callback_SetPlayerInfo(buffer: &[u8]) {
     match SetPlayerInfo::deserialize(buffer) {
         Ok(set_player_info_msg) => {
             let player_id = set_player_info_msg.pId;
-//            let profile_info = set_player_info_msg.profile_info.clone();
+            let player_name = set_player_info_msg.UserProfileName.clone();
+            
+            
+
 
         }
         Err(e) => {
