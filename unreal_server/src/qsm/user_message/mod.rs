@@ -8,3 +8,4 @@ pub mod message_allow_connect;
 pub mod message_server_response;
 pub mod message_delete_player;
 pub mod message_set_user_profile_info;
+pub mod message_update_players_info;
