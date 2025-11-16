@@ -32,15 +32,4 @@ impl GameLogicMain {
         }
     }
 
-    pub fn do_command_chat_message(&mut self, entity_id : u32, content : String) {
-        // Handle chat message logic here
-        // println!("Chat message from entity {}: {}", entity_id, content);
-
-        // // Broadcast chat message to all clients
-        // let chat_message = format!("Entity {} says: {}", entity_id, content);
-        // let serialized_message = chat_message.as_bytes().to_vec();
-        // self.broadcast_msg_udp_all(serialized_message);
-
-    }
-
 }
