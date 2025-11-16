@@ -158,6 +158,19 @@ impl VECharacterManager
         
     }
 
+    pub fn get_character_mut(&mut self, _target_id: i64) -> Option<std::sync::MutexGuard<VECharcater>> {
+        if let Some(target_arc) = self.player_container_search_map.get(&_target_id) {
+            if let Ok(guard) = target_arc.lock() {
+                return Some(guard);
+            } else {
+                eprintln!("Failed to lock character with id {}", _target_id);
+                return None;
+            }
+        } else {
+            return None;
+        }
+    }
+
     pub fn delete_characeter(&mut self, _target_id: i64) {
         if let Some(target_arc) = self.player_container_search_map.remove(&_target_id) {
 

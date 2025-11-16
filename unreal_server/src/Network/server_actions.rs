@@ -88,4 +88,14 @@ impl Server {
     }
 
 
+    pub fn server_action_set_player_profile(&mut self,_pId: u32, _player_name: String) {
+            // Update Player Profile Info
+            if let Some(mut character) = self.game_character_manager.lock().unwrap().get_character_mut(_pId as i64) {
+                character.set_player_name(_player_name.clone());
+                println!("Updated player profile for PID: {} with new name: {}", _pId, _player_name);
+            } else {
+                eprintln!("Character with PID: {} not found for profile update.", _pId);
+            }
+    }
+
 }
