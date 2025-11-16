@@ -4,6 +4,7 @@ use std::time::Duration;
 use crate::qsm;
 use crate::Network::server::*;
 use crate::Network::connection::*;
+use crate::qsm::user_message::message_update_players_info::UpdatePlayersInfo;
 use super::qsm::user_message::message_allow_connect::*;
 use super::Event::event_handler::*;
 use crate::Network::server_common::ServerActionType::*;
@@ -94,7 +95,23 @@ impl Server {
                 character.set_player_name(_player_name.clone());
                 println!("Updated player profile for PID: {} with new name: {}", _pId, _player_name);
 
-                
+
+                let update_players_info_message = UpdatePlayersInfo::new(
+                    EventHeader::UPDATE_PLAYERS_INFO as u32, 
+                    _pId, 
+                    _player_name);
+
+                let send_msg = update_players_info_message.serialize();
+//                let req_enter_message = MessageToSend::Single(*token, send_msg);
+                let req_enter_message = MessageToSend::Broadcast(send_msg);
+
+                if let Err(_) = self.send_tcp_message(req_enter_message) {
+//                    eprintln!("Failed to send message to client with token: {:?}", token);
+                }
+                else {
+                }
+
+
             } else {
                 eprintln!("Character with PID: {} not found for profile update.", _pId);
             }

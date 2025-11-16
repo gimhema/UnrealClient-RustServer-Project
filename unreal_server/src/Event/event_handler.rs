@@ -41,7 +41,8 @@ enum_from_u32! {
         SERVER_RESPONSE = 12,
         ENTER_PLAYER_TO_GAME = 13,
         SET_PLAYER_INFO = 14,
-        END = 15,
+        UPDATE_PLAYERS_INFO = 15,
+        END = 16,
     }
 }
 
