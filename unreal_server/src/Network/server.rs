@@ -139,6 +139,8 @@ pub fn start(&mut self) -> io::Result<()> {
                     } else {
                         std::thread::sleep(Duration::from_millis(1));
                     }
+
+                    game_logic.lock().unwrap().server_tick();
                 }
             })
         };
