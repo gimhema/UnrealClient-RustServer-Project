@@ -15,6 +15,7 @@ pub mod game_parameta_action_logic;
 pub mod game_logic_handle;
 pub mod game_logic_action_combat;
 pub mod game_logic_action_player;
+pub mod game_logic_tick;
 
 use super::Network;
 use super::qsm;
