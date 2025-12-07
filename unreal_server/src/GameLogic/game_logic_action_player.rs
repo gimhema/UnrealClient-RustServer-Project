@@ -17,18 +17,18 @@ impl GameLogicMain {
             });
 
             // // Broadcast to all clients
-            let udp_message = message_movement::PlayerMovement {
-                mid : EventHeader::PLAYER_MOVEMENT_UPDATE as u32,
-                id: entity_id,
-                x: loc_x,
-                y: loc_y,
-                z: loc_z,
-                roll: q_x,
-                pitch: q_y,
-                yaw: q_z,
-            };
-            let serialized_message = udp_message.serialize();
-            self.broadcast_msg_udp_all(serialized_message);
+            // let udp_message = message_movement::PlayerMovement {
+            //     mid : EventHeader::PLAYER_MOVEMENT_UPDATE as u32,
+            //     id: entity_id,
+            //     x: loc_x,
+            //     y: loc_y,
+            //     z: loc_z,
+            //     roll: q_x,
+            //     pitch: q_y,
+            //     yaw: q_z,
+            // };
+            // let serialized_message = udp_message.serialize();
+            // self.broadcast_msg_udp_all(serialized_message);
         }
     }
 

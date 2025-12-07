@@ -42,7 +42,8 @@ enum_from_u32! {
         ENTER_PLAYER_TO_GAME = 13,
         SET_PLAYER_INFO = 14,
         UPDATE_PLAYERS_INFO = 15,
-        END = 16,
+        ADD_PLAYER_INPUT = 16,
+        END = 17,
     }
 }
 

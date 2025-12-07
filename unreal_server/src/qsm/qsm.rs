@@ -8,7 +8,7 @@ use crate::qsm::user_event::*;
 // 콜백 함수들은 그대로 유지됩니다.
 use super::user_event::event_chat::CallBack_Chat;
 use super::user_event::event_new_player::CallBack_CreateNewPlayer;
-use super::user_event::event_player_movement::CallBack_PlayerMovementUpdate;
+use super::user_event::event_player_movement::{CallBack_PlayerMovementUpdate, CallBack_AddPlayerInput};
 use super::user_event::event_make_account::CallBack_MakeAccount;
 use super::user_event::event_make_account::CallBack_VerifyAccount;
 use super::user_event::event_new_player::CallBack_EnterNewPlayerToGame;
@@ -77,6 +77,7 @@ pub fn handle_quicksot_message(buffer: &[u8]) {
         EventHeader::ENTER_NEW_PAYER => CallBack_EnterNewPlayerToGame(buffer),
         EventHeader::ALLOW_CONNECT_GAME => CallBack_AllowConnectGame(buffer),
         EventHeader::SET_PLAYER_INFO => Callback_SetPlayerInfo(buffer),
+        EventHeader::ADD_PLAYER_INPUT => CallBack_AddPlayerInput(buffer),
         // 향후 추가될 다른 EventHeader 값에 대한 처리
         _ => println!("Unhandled EventHeader: {:?}", message_header),
     }
