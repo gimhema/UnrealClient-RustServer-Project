@@ -1,8 +1,8 @@
 // use crate::get_udp_server_instance;
 use crate::qsm::{qsm::GLOBAL_MESSAGE_UDP_QUEUE, user_message::message_movement::{self, PlayerMovement}};
 
-use super::GameLogic::game_logic_main::*;
-use super::GameLogic::game_logic_handle::get_game_logic;
+use super::game_logic::game_logic_main::*;
+use super::game_logic::game_logic_handle::get_game_logic;
 
 pub fn CallBack_PlayerMovementUpdate(buffer: &[u8])
 {
@@ -26,10 +26,10 @@ pub fn CallBack_PlayerMovementUpdate(buffer: &[u8])
                         }
                     );
                 } else {
-                    eprintln!("[MovementCB] Failed to lock GameLogic.");
+                    eprintln!("[MovementCB] Failed to lock game_logic.");
                 }
             } else {
-                eprintln!("[MovementCB] GameLogic not initialized (set_global_game_logic missing).");
+                eprintln!("[MovementCB] game_logic not initialized (set_global_game_logic missing).");
             }
 
         }

@@ -1,6 +1,6 @@
 use crate::qsm::user_message::message_delete_player::{self, DeletePlayer};
 
-use crate::Event::event_handler::EventHeader;
+use crate::event::event_handler::EventHeader;
 
 pub fn RequestDeletePlayer(id : i64)
 {

@@ -1,29 +1,29 @@
 // use qsm::qsm::get_event_handler;
-// use Network::server_datagram::get_udp_server_instance;
+// use network::server_datagram::get_udp_server_instance;
 
 
 #[macro_use]
 extern crate lazy_static;
 
-mod Agent;
-mod Event;
-mod Network;
+mod agent;
+mod event;
+mod network;
 mod qsm;
-mod Crypto;
-mod Session;
-mod GameLogic;
+mod crypto;
+mod session;
+mod game_logic;
 
-// Core Logic
-mod Core;
-use crate::GameLogic::game_logic_main::*;
-use crate::GameLogic::game_setting::*;
+// core Logic
+mod core;
+use crate::game_logic::game_logic_main::*;
+use crate::game_logic::game_setting::*;
 use std::sync::Arc;
 use std::thread;
 use std::sync::Mutex;
 use std::time::{Duration, Instant};
 // use tokio::time::Duration;
-use crate::Network::message_queue::*;
-use crate::Network::server::*;
+use crate::network::message_queue::*;
+use crate::network::server::*;
 use tokio::io;
 use mio::Token;
 

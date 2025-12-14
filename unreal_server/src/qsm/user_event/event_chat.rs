@@ -1,9 +1,9 @@
 
 use crate::qsm::user_message::message_chat::{self, ChatMessage};
-use super::Network::server_common::*;
-use crate::Event::event_handler::EventHeader;
+use super::network::server_common::*;
+use crate::event::event_handler::EventHeader;
 use crate::qsm::qsm::GLOBAL_MESSAGE_TX_QUEUE;
-use crate::Network::connection::MessageToSend;
+use crate::network::connection::MessageToSend;
 pub fn CallBack_Chat(buffer: &[u8])
 {
     match ChatMessage::deserialize(buffer) {

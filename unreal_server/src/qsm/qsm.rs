@@ -1,5 +1,5 @@
 // use crate::messages::example_message::ExampleMessage;
-use crate::{qsm::messages::ExampleMessage, Event::event_handler::EventHeader};
+use crate::{qsm::messages::ExampleMessage, event::event_handler::EventHeader};
 use std::sync::{Arc, RwLock, RwLockReadGuard};
 use std::collections::HashMap; // HashMap은 더 이상 필요 없을 수 있지만, 혹시 다른 곳에서 사용된다면 유지
 
@@ -16,7 +16,7 @@ use super::user_event::event_new_player::CallBack_AllowConnectGame;
 use super::user_event::event_player_info::Callback_SetPlayerInfo;
 
 use lazy_static::lazy_static;
-use crate::Network::connection::{MessageToSend}; // 경로를 실제에 맞게 수정하세요.
+use crate::network::connection::{MessageToSend}; // 경로를 실제에 맞게 수정하세요.
 use crossbeam_queue::ArrayQueue;
 use std::net::SocketAddr;
 lazy_static! {

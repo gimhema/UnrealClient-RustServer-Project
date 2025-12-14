@@ -4,8 +4,8 @@ pub mod user_message;
 pub mod qsm;
 pub mod messages;
 
-use super::GameLogic;
-use super::Network;
+use super::game_logic;
+use super::network;
 
 pub mod QuickShotMessage {
 

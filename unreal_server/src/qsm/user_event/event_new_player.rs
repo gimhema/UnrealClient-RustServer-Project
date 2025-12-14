@@ -1,7 +1,7 @@
 use crate::qsm::user_message::message_allow_connect::*;
 use crate::qsm::user_message::message_server_response::{self, ServerResponse};
 
-use super::Network::server_common::*;
+use super::network::server_common::*;
 
 pub fn CallBack_CreateNewPlayer(buffer: &[u8])
 {

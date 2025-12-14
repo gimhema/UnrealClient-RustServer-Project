@@ -1,9 +1,9 @@
 
-use crate::Event::event_handler::EventHeader;
+use crate::event::event_handler::EventHeader;
 use crate::qsm::qsm::GLOBAL_MESSAGE_TX_QUEUE;
-use crate::Network::connection::MessageToSend;
+use crate::network::connection::MessageToSend;
 use crate::qsm::user_message::message_set_user_profile_info::SetPlayerInfo;
-use super::Network::server_common::*;
+use super::network::server_common::*;
 
 pub fn Callback_SetPlayerInfo(buffer: &[u8]) {
  
