@@ -1,0 +1,56 @@
+use crate::qsm::QuickShotMessage;
+use super::Event;
+use super::qsm::qsm::*;
+use super::Network::*;
+// use crate::Network::server_send::send_message_to_all_conn_TEST;
+
+
+macro_rules! enum_from_u32 {
+    ($name:ident { $($variant:ident = $value:expr),* $(,)? }) => {
+        #[repr(u32)]
+        #[derive(Debug, Clone, Copy)]
+        pub enum $name {
+            $($variant = $value),*
+        }
+
+        impl From<u32> for $name {
+            fn from(header: u32) -> Self {
+                match header {
+                    $($value => $name::$variant),*,
+                    _ => $name::END,
+                }
+            }
+        }
+    };
+}
+
+enum_from_u32! {
+    EventHeader {
+        DEFAULT = 0,
+        SEND_MESSAGE_TO_ALL = 1,
+        SEND_MESSAGE_TO_TARGET = 2,
+        ECHO_MESSAGE = 3,
+        CHAT_MESSAGE = 4,
+        PLAYER_MOVEMENT_UPDATE = 5,
+        NEW_PLAYER = 6,
+        MAKE_ACCOUNT = 7,
+        VERIFY_ACCOUNT = 8,
+        ENTER_NEW_PAYER = 9,
+        DELETE_PLAYER = 10,
+        ALLOW_CONNECT_GAME = 11,
+        SERVER_RESPONSE = 12,
+        ENTER_PLAYER_TO_GAME = 13,
+        SET_PLAYER_INFO = 14,
+        UPDATE_PLAYERS_INFO = 15,
+        ADD_PLAYER_INPUT = 16,
+        END = 17,
+    }
+}
+
+
+impl EventHeader {
+    pub fn action(buffer: &[u8])
+    {
+        handle_quicksot_message(buffer);
+    }
+}
