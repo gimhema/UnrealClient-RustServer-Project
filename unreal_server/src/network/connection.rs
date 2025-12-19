@@ -32,6 +32,16 @@ pub struct ClientConnection {
 
 impl Server
 {
+// TCP framing: [u32 payload_len][payload bytes...]
+    #[inline]
+    fn frame_tcp_payload(payload: &[u8]) -> Vec<u8> {
+        let len = payload.len() as u32;
+        let mut out = Vec::with_capacity(4 + payload.len());
+        out.extend_from_slice(&len.to_le_bytes());
+        out.extend_from_slice(payload);
+        out
+    }
+
 // --- TCP 메시지 송신 함수 (외부에서 호출 가능) ---
     pub fn send_tcp_message(&self, message: MessageToSend) -> Result<(), ()> {
         if let Err(e) = self.tcp_message_tx_queue.push(message) {
@@ -43,16 +53,14 @@ impl Server
     }
 
 
-// --- 단일 TCP 소켓 대상 메시지 전송 (TCP 전용) ---
-    // 함수 이름 변경: send_tcp_data_to_token
     pub fn send_tcp_data_to_token(&mut self, token: Token, data: Vec<u8>) -> io::Result<()> {
         if let Some(client) = self.clients.get_mut(&token) {
             let mut write_queue = client.write_queue.lock().unwrap();
-            write_queue.extend_from_slice(&data);
+            let framed = Self::frame_tcp_payload(&data);
+            write_queue.extend_from_slice(&framed);
             self.poll.registry().reregister(&mut client.stream, token, Interest::READABLE | Interest::WRITABLE)?;
             Ok(())
         } else {
-            eprintln!("Attempted to send TCP message to non-existent client with token: {:?}", token);
             Ok(())
         }
     }
