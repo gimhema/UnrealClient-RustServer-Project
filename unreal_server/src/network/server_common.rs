@@ -5,10 +5,10 @@ use std::collections::HashMap;
 use std::io;
 use std::net::SocketAddr;
 use std::collections::VecDeque;
-use crate::Network::server::*;
-use crate::Network::connection::*;
+use crate::network::server::*;
+use crate::network::connection::*;
 use std::time::{Instant};
-use crate::Event::event_handler::EventHeader;
+use crate::event::event_handler::EventHeader;
 use std::collections::BTreeSet;
 
 

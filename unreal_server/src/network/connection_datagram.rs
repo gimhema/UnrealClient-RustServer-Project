@@ -6,10 +6,10 @@ use mio::Token;
 use super::connection::*;
 use std::sync::{RwLock, Arc, RwLockReadGuard};
 use super::message_queue::*;
-use crate::Network::server::*;
+use crate::network::server::*;
 use std::io::{self, Read, Write};
 use std::net::SocketAddr;
-use crate::Event::event_handler::EventHeader;
+use crate::event::event_handler::EventHeader;
 
 impl Server {
 

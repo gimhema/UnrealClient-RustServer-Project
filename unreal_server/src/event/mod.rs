@@ -1,8 +1,8 @@
 pub mod event_handler;
 use super::qsm;
-use super::Network;
+use super::network;
 
 
-pub mod Event {
+pub mod event {
 
 }

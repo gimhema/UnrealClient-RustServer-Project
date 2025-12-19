@@ -7,13 +7,13 @@ pub mod message_queue;
 pub mod server_actions;
 pub mod net_tx;
 
-use super::Event;
-use super::Core;
-use super::Crypto;
+use super::event;
+use super::core;
+use super::crypto;
 use super::qsm;
-use super::GameLogic;
+use super::game_logic;
 
 
-pub mod Network {
+pub mod network {
 
 }

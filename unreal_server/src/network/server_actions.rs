@@ -2,15 +2,15 @@ use std::thread::sleep;
 use std::time::Duration;
 
 use crate::qsm;
-use crate::Network::server::*;
-use crate::Network::connection::*;
+use crate::network::server::*;
+use crate::network::connection::*;
 use crate::qsm::user_message::message_update_players_info::UpdatePlayersInfo;
 use super::qsm::user_message::message_allow_connect::*;
-use super::Event::event_handler::*;
-use crate::Network::server_common::ServerActionType::*;
-use crate::GameLogic::game_player::VECharcater;
+use crate::event::event_handler::EventHeader;
+use crate::network::server_common::ServerActionType::*;
+use crate::game_logic::game_player::VECharcater;
 use mio::Token;
-use crate::GameLogic::game_player::GameNetStatus;
+use crate::game_logic::game_player::GameNetStatus;
 use crate::Command;
 
 

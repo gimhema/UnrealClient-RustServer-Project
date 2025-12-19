@@ -1,8 +1,8 @@
 use crate::qsm::QuickShotMessage;
-use super::Event;
+use super::event;
 use super::qsm::qsm::*;
-use super::Network::*;
-// use crate::Network::server_send::send_message_to_all_conn_TEST;
+use super::network::*;
+// use crate::network::server_send::send_message_to_all_conn_TEST;
 
 
 macro_rules! enum_from_u32 {
