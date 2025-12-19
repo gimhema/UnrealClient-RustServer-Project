@@ -26,6 +26,7 @@ pub struct ClientConnection {
     pub stream: TcpStream,
     pub addr: SocketAddr, // 이 addr은 TCP 주소
     pub write_queue: Arc<Mutex<Vec<u8>>>,
+    pub read_buf: Vec<u8>,
     pub is_udp_client: bool, // 클라이언트가 UDP 통신을 지원하는지 여부
     pub udp_addr: Option<SocketAddr>, // 클라이언트의 UDP 수신 주소를 저장할 필드 (새로 추가)
 }

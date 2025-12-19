@@ -24,6 +24,7 @@ use crate::game_logic::game_logic_handle::*;
 const SERVER_TCP_TOKEN: Token = Token(0);
 const SERVER_UDP_TOKEN: Token = Token(1);
 const CLIENT_TOKEN_START: Token = Token(2); // 클라이언트 토큰은 2부터 시작
+const MAX_TCP_FRAME: usize = 1024 * 1024;
 
 // --- 메시지를 전송할 Lock-Free 큐 타입 정의 ---
 pub type SharedTcpMessageQueue = Arc<ArrayQueue<MessageToSend>>;
@@ -213,6 +214,7 @@ pub fn start(&mut self) -> io::Result<()> {
                                         stream,
                                         addr, // TCP 주소
                                         write_queue: Arc::new(Mutex::new(Vec::new())),
+                                        read_buf: Vec::new(),
                                         is_udp_client: true,
                                         udp_addr: None,
                                     });
@@ -414,47 +416,49 @@ pub fn start(&mut self) -> io::Result<()> {
 
 // ClientConnection의 이벤트 핸들러는 이제 'Server' 인스턴스와 완전히 독립적입니다.
 impl ClientConnection {
-    // --- 메시지 수신 처리 (읽기 이벤트) ---
-    // 이 함수는 'ClientConnection'에 대한 가변 참조만 받습니다.
-    fn handle_read_event(client: &mut ClientConnection) -> io::Result<bool> {
-        let mut buffer = Vec::new();
-        let mut _read_bytes = 0; // 경고 제거: 'read_bytes'는 사용되지 않지만 할당됨
 
-        loop {
-            let mut chunk = [0; 4096]; // 4KB 청크
-            match client.stream.read(&mut chunk) {
-                Ok(0) => {
-                    // 연결 종료
-                    println!("Client disconnected: {}", client.addr);
-                    return Ok(true); // 연결이 끊겼음을 알림
-                }
-                Ok(n) => {
-                    buffer.extend_from_slice(&chunk[..n]);
-                    _read_bytes += n;
-                    // 읽을 데이터가 더 이상 없으면 루프 종료
-                    if n < chunk.len() {
-                        break;
-                    }
-                }
-                Err(ref e) if e.kind() == io::ErrorKind::WouldBlock => {
-                    // 더 이상 읽을 데이터가 없음
-                    break;
-                }
-                Err(e) => {
-                    eprintln!("Error reading from client {}: {}", client.addr, e);
-                    return Err(e);
-                }
+
+fn handle_read_event(client: &mut ClientConnection) -> io::Result<bool> {
+    // 1) TCP read → read_buf에 누적
+    loop {
+        let mut chunk = [0u8; 4096];
+        match client.stream.read(&mut chunk) {
+            Ok(0) => return Ok(true),
+            Ok(n) => {
+                client.read_buf.extend_from_slice(&chunk[..n]);
+                if n < chunk.len() { break; }
             }
+            Err(ref e) if e.kind() == io::ErrorKind::WouldBlock => break,
+            Err(e) => return Err(e),
+        }
+    }
+
+    // 2) [len][payload] 프레임 파싱
+    loop {
+        if client.read_buf.len() < 4 { break; }
+
+        let len = u32::from_le_bytes([
+            client.read_buf[0], client.read_buf[1], client.read_buf[2], client.read_buf[3],
+        ]) as usize;
+
+        if len == 0 || len > MAX_TCP_FRAME {
+            eprintln!("Protocol error from {}: invalid frame len={}", client.addr, len);
+            return Ok(true); // disconnect
         }
 
-        if !buffer.is_empty() {
-            println!("Received message from client {}: {:?}", client.addr, String::from_utf8_lossy(&buffer));
-            // TODO: 수신된 메시지 처리 로직 (예: 게임 로직으로 전달, 파싱 등)
-            
-            EventHeader::action(&buffer);
-        }
-        Ok(false) // 연결 유지
+        let total = 4 + len;
+        if client.read_buf.len() < total { break; }
+
+        let payload = client.read_buf[4..total].to_vec();
+        client.read_buf.drain(..total);
+
+        // payload는 기존 QSM 메시지(첫4바이트 mid 포함)
+        EventHeader::action(&payload);
     }
+
+    Ok(false)
+}
+
 
     // --- 메시지 송신 처리 (쓰기 이벤트) ---
     // 이 함수는 'ClientConnection'에 대한 가변 참조만 받습니다.
